@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Snowdog_Fourzerofour>
+            <version>0.1.1</version>
+        </Snowdog_Fourzerofour>
+    </modules>
+    <global>
+        <resources>
+            <!-- initialize sql upgrade setup -->
+            <fourzerofour_setup>
+                <setup>
+                    <module>Snowdog_Fourzerofour</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </fourzerofour_setup>
+            <fourzerofour_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </fourzerofour_write>
+            <fourzerofour_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </fourzerofour_read>
+        </resources>
+
+        <blocks>
+            <fourzerofour>
+                <class>Snowdog_Fourzerofour_Block</class>
+            </fourzerofour>
+        </blocks>
+
+        <models>
+            <fourzerofour>
+                <class>Snowdog_Fourzerofour_Model</class>
+                <resourceModel>snowdog_fourzerofour_resource</resourceModel>
+            </fourzerofour>
+
+            <snowdog_fourzerofour_resource>
+                <class>Snowdog_Fourzerofour_Model_Resource</class>
+                <entities>
+                    <log><table>snowdog_404_log</table></log>
+                </entities>
+            </snowdog_fourzerofour_resource>
+        </models>
+
+        <helpers>
+            <fourzerofour>
+                <class>Snowdog_Fourzerofour_Helper</class>
+            </fourzerofour>
+        </helpers>
+
+        <events>
+            <controller_front_send_response_before>
+                <observers>
+                    <fourzerofour>
+                        <type>singleton</type>
+                        <class>Snowdog_Fourzerofour_Model_Observer_Fourzerofour</class>
+                        <method>log404</method>
+                    </fourzerofour>
+                </observers>
+            </controller_front_send_response_before>
+        </events>
+    </global>
+
+    <admin>
+        <routers>
+            <fourzerofour>
+                <use>admin</use>
+                <args>
+                    <module>Snowdog_Fourzerofour</module>
+                    <frontName>adminlog</frontName>
+                </args>
+            </fourzerofour>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <fourzerofour>
+                    <file>fourzerofour.xml</file>
+                </fourzerofour>
+            </updates>
+        </layout>
+    </adminhtml>
+
+</config>
+
