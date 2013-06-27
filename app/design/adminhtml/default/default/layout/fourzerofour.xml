@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <layout version="0.1.0">
     <fourzerofour_adminhtml_logs_index>
         <reference name="menu">
@@ -8,4 +9,20 @@
             <block type="fourzerofour/adminhtml_logs" name="logs404" />
         </reference>
     </fourzerofour_adminhtml_logs_index>
+
+    <fourzerofour_adminhtml_redirects_index>
+        <reference name="menu">
+            <action method="setActive"><menupath>report</menupath></action>
+        </reference>
+        <reference name="content">
+            <block type="fourzerofour/adminhtml_redirects" name="redirects404" />
+        </reference>
+    </fourzerofour_adminhtml_redirects_index>
+
+
+    <fourzerofour_adminhtml_redirects_edit>
+        <reference name="content">
+            <block type="fourzerofour/adminhtml_redirects_edit" name="redirects404_edit" />
+        </reference>
+    </fourzerofour_adminhtml_redirects_edit>
 </layout>

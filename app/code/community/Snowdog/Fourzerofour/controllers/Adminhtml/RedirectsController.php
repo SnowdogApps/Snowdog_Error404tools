@@ -134,4 +134,37 @@
          $grid       = $this->getLayout()->createBlock('fourzerofour/adminhtml_logs_grid');
          $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
      }
+
+
+     public function deleteAction() {
+
+         $id = $this->getRequest()->getParam('id', null);
+         if ($id) {
+
+             $model = Mage::getModel('fourzerofour/redirect');
+             $id = $this->getRequest()->getParam('id');
+             if ($id) {
+                 $model->load($id);
+             }
+
+             try {
+                 $model->delete();
+                 Mage::getSingleton('adminhtml/session')->addSuccess(
+                     Mage::helper('adminhtml')->__(
+                         '404 Redirect was deleted'
+                     )
+                 );
+                 $this->_redirect('*/*/index');
+
+             } catch (Exception $e) {
+                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                 if ($model && $model->getId()) {
+                     $this->_redirect('*/*/edit', array('id' => $model->getRedirectId()));
+                 } else {
+                     $this->_redirect('*/*/');
+                 }
+             }
+             return;
+         }
+     }
  }

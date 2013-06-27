@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Snowdog_Fourzerofour>
-            <version>0.1.3</version>
+            <version>0.1.2</version>
         </Snowdog_Fourzerofour>
     </modules>
     <global>
