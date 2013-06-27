@@ -8,6 +8,11 @@
                     <sort_order>999999</sort_order>
                     <action>adminlog/adminhtml_logs</action>
                 </fourzerofour>
+                <fourzerofourredirect translate="title" module="fourzerofour">
+                    <title>404 redirects</title>
+                    <sort_order>1999999</sort_order>
+                    <action>adminlog/adminhtml_redirects</action>
+                </fourzerofourredirect>
             </children>
         </report>
     </menu>
@@ -19,8 +24,11 @@
                     <report>
                         <children>
                             <fourzerofour>
-                                <title>Log 404 menu</title>
+                                <title>Log 404 grid</title>
                             </fourzerofour>
+                            <fourzerofourredirect>
+                                <title>Redirect 404 grid</title>
+                            </fourzerofourredirect>
                         </children>
                     </report>
 
