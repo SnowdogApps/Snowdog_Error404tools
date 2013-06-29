@@ -18,6 +18,7 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
             // check for 404 redirect in the database
             // remove slash from REQUEST_URI
             $requestUrl = substr($_SERVER['REQUEST_URI'] ,1);
+            $requestUrl = preg_replace('/\?.*/', '', $requestUrl);
 
             // get redirect404 collection and look by request path
             $redirect404  = Mage::getModel('fourzerofour/redirect')->getCollection()
@@ -32,11 +33,13 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                 switch ($redirect404->getRedirectType()) {
                     case 1 : { $productId  = (int)$redirect404->getProductId();  $url = Mage::getModel('catalog/product')->load($productId)->getProductUrl() ; break ;}
                     case 2 : { $categoryId = (int)$redirect404->getCategoryId(); $url = Mage::getModel('catalog/category')->load($categoryId)->getUrl() ; break ; }
-                    case 3 : { $url        = $redirect404->getTargetPath(); break;  }
+                    case 3 : { $url        = Mage::getBaseUrl() . $redirect404->getTargetPath(); break;  }
                 }
 
                 // redirect to specified page
-                Mage::app()->getFrontController()->getResponse()->setRedirect($url);
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: ' . $url);
+                die();
 
             } else {
 

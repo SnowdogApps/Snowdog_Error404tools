@@ -29,7 +29,13 @@ $installer->startSetup();
 
         if ($result['product_id'] == null ) {
             // set redirect type = category
-            $redirectType = 2;
+            if ($result['category_id'] == null ) {
+                // set redirect type - custom
+                $redirectType = 3;
+            } else {
+                // set redirect type - category
+                $redirectType = 2;
+            }
         } else if ($result['category_id'] == null ) {
             // set redirect type = product
             $redirectType = 1;
