@@ -10,7 +10,7 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
-                <log404_group translate="label" module="manufacturer">
+                <log404_group translate="label" module="fourzerofour">
                     <label>404 log options</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>5000</sort_order>
