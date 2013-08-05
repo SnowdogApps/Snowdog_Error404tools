@@ -4,14 +4,15 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
 
     public function log404(Varien_Event_Observer $observer) {
 
-        $logReferer = Mage::app()->getRequest()->getServer('HTTP_REFERER');
+        $logReferrer = Mage::app()->getRequest()->getServer('HTTP_REFERER');
         $controller = Mage::app()->getRequest()->getControllerName();
         $route      = Mage::app()->getRequest()->getRouteName();;
         $action     = Mage::app()->getRequest()->getActionName();;
         $path       = strtolower($controller . $route . $action);
 
         $logSaveType      = Mage::getStoreConfig('log404_options/log404_group/log404type');
-        $saveEmptyReferer = (int)Mage::getStoreConfig('log404_options/log404_group/log404referer');
+        $saveEmptyReferrer = (int)Mage::getStoreConfig('log404_options/log404_group/log404referer');
+        $defaultUrl        = Mage::getBaseUrl() . Mage::getStoreConfig('log404_options/log404_group/log404default');
 
         if ($path == 'indexcmsnoroute') {
 
@@ -26,14 +27,40 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                 ->addFieldToFilter('store_id' ,     array ('eq' => Mage::app()->getStore()->getStoreId()))
                 ->getFirstItem();
 
-            // dont log 404 error for if redirect already exists
+            // don't log 404 error for if redirect already exists
             if ($redirect404->getId()) {
                 // var_dump($redirect404);
 
                 switch ($redirect404->getRedirectType()) {
-                    case 1 : { $productId  = (int)$redirect404->getProductId();  $url = Mage::getModel('catalog/product')->load($productId)->getProductUrl() ; break ;}
-                    case 2 : { $categoryId = (int)$redirect404->getCategoryId(); $url = Mage::getModel('catalog/category')->load($categoryId)->getUrl() ; break ; }
-                    case 3 : { $url        = Mage::getBaseUrl() . $redirect404->getTargetPath(); break;  }
+                    case 1 : {
+                        $productId  = (int)$redirect404->getProductId();
+                        $product    = Mage::getModel('catalog/product')->load($productId);
+
+                        // check if product model was loaded - if product entity exists
+                        if ($product->getId()) {
+                            $url = $product->getProductUrl() ;
+                        } else {
+                            // redirect to page defined in system configuration
+                            $url = $defaultUrl;
+                        }
+                        break ;
+                    }
+                    case 2 : {
+                        $categoryId = (int)$redirect404->getCategoryId();
+                        $category   = Mage::getModel('catalog/category')->load($categoryId);
+
+                        // check if category model was loaded - if category entity exists
+                        if ($category->getId()) {
+                            $url = $category->getUrl();
+                        } else {
+                            // redirect to page defined in system configuration
+                            $url = $defaultUrl;
+                        }
+                        break ;
+                    }
+                    case 3 : {
+                        $url        = Mage::getBaseUrl() . $redirect404->getTargetPath();
+                        break;  }
                 }
 
                 // redirect to specified page
@@ -43,7 +70,7 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
 
             } else {
 
-                if (($logReferer != '') || ($logReferer == '' && $saveEmptyReferer) ) {
+                if (($logReferrer != '') || ($logReferrer == '' && $saveEmptyReferrer) ) {
                     $logTime    = date('Y-m-d H:i:s');
                     $logStoreId = Mage::app()->getStore()->getStoreId();
                     $logUrlAddress = $_SERVER['REQUEST_URI'];
@@ -56,7 +83,7 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                     $log->setLogTime($logTime)
                         ->setStoreId($logStoreId)
                         ->setUrlAddress($logUrlAddress)
-                        ->setReferer($logReferer)
+                        ->setReferer($logReferrer)
                         ->setIpAddress($logIp)
                         ->setUserAgent($logUserAgent);
 
@@ -64,8 +91,8 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                     switch ($logSaveType) {
                         case '1' : { $log->save(); break ;}
                         case '2' : { $log->save();
-                                     $log->saveLogCsv($logTime, $logStoreId, $logUrlAddress, $logReferer, $logIp, $logUserAgent); break ;}
-                        case '3' : { $log->saveLogCsv($logTime, $logStoreId, $logUrlAddress, $logReferer, $logIp, $logUserAgent); break ;}
+                                     $log->saveLogCsv($logTime, $logStoreId, $logUrlAddress, $logReferrer, $logIp, $logUserAgent); break ;}
+                        case '3' : { $log->saveLogCsv($logTime, $logStoreId, $logUrlAddress, $logReferrer, $logIp, $logUserAgent); break ;}
                     }
                 }
             }

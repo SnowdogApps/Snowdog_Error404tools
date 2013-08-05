@@ -12,8 +12,8 @@
      `url_address` VARCHAR(255) NOT NULL,
      `referer`    VARCHAR(255) NOT NULL,
       PRIMARY KEY  (`log_id`),
-      CONSTRAINT `FK_COMMENT_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `{$installer->getTable('core/store')}` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='404 logs with refeffers';
+      FOREIGN KEY (`store_id`) REFERENCES `{$installer->getTable('core/store')}` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT = '404 logs with refeffers';
     ");
 
     $installer->endSetup();
