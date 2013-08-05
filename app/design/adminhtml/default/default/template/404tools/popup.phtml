@@ -1,0 +1,84 @@
+<?php
+
+ /* this is some popup stuff */
+
+?>
+
+<div style="left: 0px; top: 0px; display: none; position: fixed; width: 100%; height: 100%; background-color: rgba(200,200, 200, 0.5); z-index: 10000" id="prodList">
+    <div style="overflow: hidden; position: relative; width: 650px; height: 350px; border: 2px solid gray; left: 50%; top: 50%; margin-top: -175px; margin-left: -325px; background-color: white;">
+        <div style=" background-color: #FDFCDC; width: 100%; height: 30px; padding-right: 25px; padding-top: 5px; paddnig-bottom: 5px; margin-bottom: 20px; border-bottom: 1px solid burlywood;">
+            <button id="closeBtn" onclick="return false;" style="float: right; height: 25px; margin-right: 10px;">close</button>
+            <script>
+                $("closeBtn").observe("click", function(event) {
+                    $("prodList").hide();
+                });
+            </script>
+        </div>
+
+        <div id="redirectInfo" style="position: relative; text-align: center;">
+            <h2><?php echo $this->__('Create redirect for 404 error:');?> </h2>
+            <span id="urlAddress"></span>
+
+            <div style="margin-top: 25px;">
+                <?php echo $this->__('Select redirect type:') ; ?>
+                <select id="redirect_type" name="redirect_type" class="select" style="padding: 5px;">
+                    <?php $model    = Mage::getModel('fourzerofour/redirect_type'); ?>
+                    <?php $options  = $model->toOptionArray(); ?>
+                    <?php foreach ($options as $value) : ?>
+                        <option value="<?php echo $value['value']; ?>" ><?php echo $value['label']; ?></option>
+                    <?php endforeach ; ?>
+                </select>
+            </div>
+            <div style="margin-top: 25px; line-height: 25px; margin-bottom: 30px;">
+                <?php echo $this->__('Product Id:'); ?>  <input type="text" value="" id="productId"  class="input-text"/> <i><?php echo $this->__('use only for product redirects'); ?></i> <br />
+                <?php echo $this->__('Category Id:'); ?> <input type="text" value="" id="categoryId" class="input-text"/> <i><?php echo $this->__('use only for category redirects'); ?></i> <br />
+                <?php echo $this->__('Target Path:'); ?> <input type="text" value="" id="targetPath" class="input-text" style="width: 300px;"/> <i><?php echo $this->__('use only for custom redirects'); ?></i> <br />
+                <input type="hidden" value="2" id="requestPath" name="requestPath" />
+            </div>
+
+            <button id="saveBtn">
+                <span>
+                    <span><?php echo $this->__('Save redirect'); ?></span>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $$(".redirectBtn").each(function(element) {
+        element.observe("click", function () {
+            var elementId = $(this).id;
+            $("prodList").show();
+            $("urlAddress").update("<?php echo Mage::getBaseUrl('web'); ?><strong><font color=\"red\">" + $(this).select("input[type=hidden]").first().value + "</font></strong>");
+            $("requestPath").value = $(this).select("input[type=hidden]").first().value;
+        });
+    });
+
+    $("saveBtn").observe("click", function(event) {
+        var url = "<?php echo Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL); ?>adminlog/adminhtml_redirects/addfrom404/" ;
+
+        new Ajax.Request(url, {
+            method:"post",
+            parameters: {
+                productId : $('productId').value,
+                categoryId: $('categoryId').value,
+                redirectType : $('redirect_type').value ,
+                requestPath: $('requestPath').value ,
+                targetPath   : $('targetPath').value
+            },
+            onSuccess: function(transport) {
+                var response = transport.responseText || "no response text";
+                if (response == "done") {
+                    window.location = "<?php echo Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL); ?>adminlog/adminhtml_logs/"
+                } else {
+                    alert ("something wrong with saving data...");
+                }
+            },
+            onFailure: function() { alert("Something went wrong..."); } ,
+            onComplete :function () {
+
+            }
+        });
+    });
+</script>

@@ -167,4 +167,29 @@
              return;
          }
      }
+
+
+     public function addfrom404Action () {
+         $data = Mage::app()->getRequest()->getPost();
+         if ($data) {
+             try {
+                 $redirect = Mage::getModel('fourzerofour/redirect');
+                 $redirect->setRedirectType($data['redirectType'])
+                          ->setProductId ($data['productId'])
+                          ->setCategoryId ($data['categoryId'])
+                          ->setRequestPath ($data['requestPath'])
+                          ->setTargetPath ($data['targetPath'])
+                          ->save();
+                 Mage::getSingleton('adminhtml/session')->addSuccess(
+                     Mage::helper('adminhtml')->__(
+                         'Redirect for <u> %s </u> created successfully' , $data['requestPath']
+                     ));
+                 echo 'done';
+             } catch (Exception $e){
+                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                 $this->_redirect('*/*/');
+             }
+         }
+
+     }
  }

@@ -3,13 +3,14 @@
  * @author Jakub Winkler
  * @company Snowdog
  */
+
 class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Block_Widget_Grid {
 
 
     public function __construct() {
         parent::__construct();
         $this->setId('logsGrid');
-        $this->setDefaultSort('log_id');
+        $this->setDefaultSort('log_time');
         $this->setDefaultDir('DESC');
     }
 
@@ -19,7 +20,6 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Bloc
 
         if ($column->getId() === 'store_id') {
             $this->getCollection()->addFieldToFilter('main_table.' . $column->getId(), array('eq' => $column->getFilter()->getValue()));
-            return $this;
         } else {
             parent::_addColumnFilterToCollection($column);
         }
@@ -31,19 +31,22 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Bloc
         $model = Mage::getModel('fourzerofour/log');
         $collection = $model->getCollection();
         $collection->getSelect()
-            ->join('core_store', 'main_table.store_id = core_store.store_id', array('name'));
+            ->join('core_store', 'main_table.store_id = core_store.store_id', array('name'))
+            ->joinLeft('snowdog_404_redirect' , 'main_table.url_address = snowdog_404_redirect.request_path' , array('redirect_id'))
+            ->group('main_table.url_address');
+
+        $collection->getSelecT()->columns (
+            array (
+                'log_count' => 'count(*)'
+            )
+        );
+
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
 
 
     protected function _prepareColumns() {
-        $this->addColumn('log_id', array(
-            'header' => Mage::helper('fourzerofour')->__('ID'),
-            'align' => 'left',
-            'width' => '1px',
-            'index' => 'log_id',
-        ));
 
         $this->addColumn('url_address', array(
             'header' => Mage::helper('fourzerofour')->__('404 Url address'),
@@ -84,6 +87,18 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Bloc
             'index' => 'log_time',
         ));
 
+        $this->addColumn('log_count', array(
+            'header' => Mage::helper('fourzerofour')->__('Log Count'),
+            'align' => 'right',
+            'index' => 'log_count',
+        ));
+
+        $this->addColumn('action', array(
+            'header' => Mage::helper('fourzerofour')->__('Action'),
+            'align' => 'center',
+            'renderer' => 'Snowdog_Fourzerofour_Block_Adminhtml_Logs_Renderer_Action'
+        ));
+
 
         $this->addExportType('*/*/exportCsv', Mage::helper('fourzerofour')->__('CSV'));
         return parent::_prepareColumns();
@@ -102,6 +117,9 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Bloc
 
         return $this;
     }
+
+
+
 
 
 }

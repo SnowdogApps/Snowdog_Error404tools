@@ -7,8 +7,12 @@
         </reference>
         <reference name="content">
             <block type="fourzerofour/adminhtml_logs" name="logs404" />
+            <block type="core/template" name="404popup">
+                <action method="setTemplate"><template>404tools/popup.phtml</template></action>
+            </block>
         </reference>
     </fourzerofour_adminhtml_logs_index>
+
 
     <fourzerofour_adminhtml_redirects_index>
         <reference name="menu">
