@@ -71,9 +71,11 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
             } else {
 
                 if (($logReferrer != '') || ($logReferrer == '' && $saveEmptyReferrer) ) {
-                    $logTime    = date('Y-m-d H:i:s');
-                    $logStoreId = Mage::app()->getStore()->getStoreId();
-                    $logUrlAddress = $_SERVER['REQUEST_URI'];
+                    $logTime       = date('Y-m-d H:i:s');
+                    $logStoreId    = Mage::app()->getStore()->getStoreId();
+                    $logUrlAddress = substr($_SERVER['REQUEST_URI'] ,1);
+                    $logUrlAddress = preg_replace('/\?.*/', '', $logUrlAddress);
+
                     $logUserAgent  = Mage::app()->getRequest()->getServer('HTTP_USER_AGENT');
                     $logIp         = Mage::app()->getRequest()->getServer('REMOTE_ADDR');
 
