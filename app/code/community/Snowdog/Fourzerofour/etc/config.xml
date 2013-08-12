@@ -88,7 +88,26 @@
                 </fourzerofour>
             </updates>
         </layout>
+
+        <translate>
+            <modules>
+                <Snowdog_Fourzerofour>
+                    <files>
+                        <default>Snowdog_Fourzerofour.csv</default>
+                    </files>
+                </Snowdog_Fourzerofour>
+        </modules>
+    </translate>
     </adminhtml>
+
+
+    <default>
+        <log404_options>
+            <log404_group>
+                <dbjoin>1</dbjoin>
+            </log404_group>
+        </log404_options>
+    </default>
 
 </config>
 

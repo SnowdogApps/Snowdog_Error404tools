@@ -12,10 +12,17 @@ class Snowdog_Fourzerofour_Model_Resource_Log_Collection extends Mage_Core_Model
 
     public function getSize()
     {
-        $records = Mage::getModel('fourzerofour/log')->getCollection();
-        $records->getSelect()->group('main_table.url_address');
-        $recordCount = $records->count();
-        return $recordCount;
+        $groupLogs = (int)Mage::getStoreConfig('log404_options/log404_group/dbjoin');
+
+        if ($groupLogs) {
+            $records = Mage::getModel('fourzerofour/log')->getCollection();
+            $records->getSelect()->group('main_table.url_address');
+            $recordCount = $records->count();
+            return $recordCount;
+        } else {
+            return parent::getSize();
+        }
+
     }
 
 

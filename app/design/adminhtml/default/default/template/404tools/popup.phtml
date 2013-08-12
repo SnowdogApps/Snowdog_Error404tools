@@ -7,7 +7,7 @@
 <div style="left: 0px; top: 0px; display: none; position: fixed; width: 100%; height: 100%; background-color: rgba(200,200, 200, 0.5); z-index: 10000" id="prodList">
     <div style="overflow: hidden; position: relative; width: 650px; height: 350px; border: 2px solid gray; left: 50%; top: 50%; margin-top: -175px; margin-left: -325px; background-color: white;">
         <div style=" background-color: #FDFCDC; width: 100%; height: 30px; padding-right: 25px; padding-top: 5px; paddnig-bottom: 5px; margin-bottom: 20px; border-bottom: 1px solid burlywood;">
-            <button id="closeBtn" onclick="return false;" style="float: right; height: 25px; margin-right: 10px;">close</button>
+            <button id="closeBtn" onclick="return false;" style="float: right; height: 25px; margin-right: 10px;"><?php echo $this->__('close');?></button>
             <script>
                 $("closeBtn").observe("click", function(event) {
                     $("prodList").hide();
@@ -72,10 +72,10 @@
                 if (response == "done") {
                     window.location = "<?php echo Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL); ?>adminlog/adminhtml_logs/"
                 } else {
-                    alert ("something wrong with saving data...");
+                    alert ("<?php echo $this->__('Error while saving data... check logs for more information');?>");
                 }
             },
-            onFailure: function() { alert("Something went wrong..."); } ,
+            onFailure: function() { alert("<?php echo $this->__('Error while getting ajax response... check logs for more information');?>"); } ,
             onComplete :function () {
 
             }

@@ -11,7 +11,7 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Renderer_Action extends Mage_Adm
             <button class="redirectBtn" id="redirectBtn_'. $row->getId() . '">
                 <input type="hidden" name="redirectPath_'. $row->getId() . '" value="' . $row->getUrlAddress(). '" />
                 <span>
-                    Add redirect
+                    ' . $this->__('Add redirect') . '
                 </span>
             </button>';
         }

@@ -45,8 +45,18 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <comment>Path used if a product / category were deleted, after /</comment>
+                            <comment>Path used if a product / category were deleted</comment>
                         </log404defaulturl>
+                        <dbjoin translate="label comment">
+                            <label>Group database records</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>101</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>If selected, all 404 logs will be grouped and an icon will be shown if a redirect is created for this particular 404 address</comment>
+                        </dbjoin>
                     </fields>
                 </log404_group>
             </groups>

@@ -23,10 +23,10 @@
                 <children>
                     <report>
                         <children>
-                            <fourzerofour>
+                            <fourzerofour translate="title">
                                 <title>Log 404 grid</title>
                             </fourzerofour>
-                            <fourzerofourredirect>
+                            <fourzerofourredirect translate="title">
                                 <title>Redirect 404 grid</title>
                             </fourzerofourredirect>
                         </children>
@@ -36,7 +36,7 @@
                         <children>
                             <config>
                                 <children>
-                                    <log404_options>
+                                    <log404_options translate="title">
                                         <title>Log 404 system configuration</title>
                                     </log404_options>
                                 </children>

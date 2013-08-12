@@ -38,9 +38,7 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit_Form extends Mage_Admi
             'label'     => Mage::helper('fourzerofour')->__('Redirect Type:'),
             'name'      => 'redirect_type',
             'values'    => Mage::getModel('fourzerofour/redirect_type')->toOptionArray(),
-            'note'      => 'Product redirect - enter product ID for selected store <br/>
-                            Category redirect - enter category ID for selected store <br/>
-                            Custom redirect - enter target path for redirect'
+            'note'      => $this->__('Product redirect - enter product ID for selected store <br/>Category redirect - enter category ID for selected store <br/>Custom redirect - enter target path for redirect')
         ));
 
         $fieldset->addField('category_id', 'text', array(
@@ -62,13 +60,13 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit_Form extends Mage_Admi
         $fieldset->addField('request_path', 'text', array(
             'label'     => Mage::helper('fourzerofour')->__('Request Path:'),
             'name'      => 'request_path',
-            'note'      => 'everything that comes after slash / '
+            'note'      => $this->__('everything that comes after slash /')
         ));
 
         $fieldset->addField('target_path', 'text', array(
             'label'     => Mage::helper('fourzerofour')->__('Target Path:'),
             'name'      => 'target_path',
-            'note'      => 'use only for custom redirects '
+            'note'      => $this->__('use only for custom redirects')
         ));
 
 
