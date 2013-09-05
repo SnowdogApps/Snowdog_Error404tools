@@ -4,8 +4,8 @@
  * @company Snowdog
  */
 
-class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Block_Widget_Grid {
-
+class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid
+    extends Mage_Adminhtml_Block_Widget_Grid {
 
     public function __construct() {
         parent::__construct();
@@ -19,7 +19,7 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Bloc
         }
 
         $this->setDefaultDir('DESC');
-    }
+    } ///public function __construct()
 
 
     protected function _addColumnFilterToCollection($column) {
@@ -31,7 +31,7 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Bloc
             parent::_addColumnFilterToCollection($column);
         }
         return $this;
-    }
+    } // protected function _addColumnFilterToCollection($column) {
 
 
     protected function _prepareCollection() {
@@ -136,7 +136,8 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Bloc
 
         $this->addExportType('*/*/exportCsv', Mage::helper('fourzerofour')->__('CSV'));
         return parent::_prepareColumns();
-    }
+
+    } // protected function _prepareColumns() {
 
 
     protected function _prepareMassaction() {
@@ -150,7 +151,8 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Grid extends Mage_Adminhtml_Bloc
         ));
 
         return $this;
-    }
+
+    } // protected function _prepareMassaction() {
 
 
 

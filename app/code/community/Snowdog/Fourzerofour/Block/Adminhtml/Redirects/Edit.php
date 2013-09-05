@@ -6,10 +6,11 @@
  */
 
 
-class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
-{
-    public function __construct()
-    {
+class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit
+    extends Mage_Adminhtml_Block_Widget_Form_Container {
+
+    public function __construct() {
+
         parent::__construct();
 
         $this->_objectId = 'redirects404_edit';
@@ -25,17 +26,19 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit extends Mage_Adminhtml
 
         $this->_updateButton('save', 'label', Mage::helper('fourzerofour')->__('Save 404 redirect'));
 
-    }
+    } // public function __construct() {
 
-    public function getHeaderText()
-    {
+
+    public function getHeaderText() {
+
         if (Mage::registry('fourzerofour') && Mage::registry('fourzerofour')->getId())
         {
             return Mage::helper('fourzerofour')->__('Redirect edit');
         } else {
             return Mage::helper('fourzerofour')->__('New redirect');
         }
-    }
+
+    } // public function getHeaderText() {
 
 
     protected function _prepareLayout() {
@@ -44,6 +47,6 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit extends Mage_Adminhtml
             $this->setChild('form', $this->getLayout()->createBlock($this->_blockGroup . '/' . $this->_controller . '_' . $this->_mode . '_form'));
         }
         return parent::_prepareLayout();
-    }
+    } // protected function _prepareLayout() {
 
-}
+} // class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit

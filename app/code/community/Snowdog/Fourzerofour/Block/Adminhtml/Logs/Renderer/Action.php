@@ -1,8 +1,8 @@
 <?php
-class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Renderer_Action extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
-{
-    public function render(Varien_Object $row)
-    {
+class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Renderer_Action
+    extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract {
+
+    public function render(Varien_Object $row) {
         if ($row->getRedirectId()) {
             //images/success_msg_icon.gif
             return '<img src="' . Mage::getDesign()->getSkinUrl() . 'images/success_msg_icon.gif' . '" >';
@@ -15,5 +15,5 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs_Renderer_Action extends Mage_Adm
                 </span>
             </button>';
         }
-    }
+    } // public function render(Varien_Object $row) {
 }

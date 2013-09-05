@@ -7,7 +7,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
- class Snowdog_Fourzerofour_Adminhtml_RedirectsController extends Mage_Adminhtml_Controller_Action {
+ class Snowdog_Fourzerofour_Adminhtml_RegexpController
+     extends Mage_Adminhtml_Controller_Action {
 
      protected function _initAction() {
 
@@ -24,7 +25,7 @@
          $this->loadLayout();
          $this->renderLayout();
 
-     } // public function indexAction()
+     } // public function indexAction() {
 
 
      public function newAction() {
@@ -38,14 +39,14 @@
 
          $id = $this->getRequest()->getParam('id', null);
 
-         $model = Mage::getModel('fourzerofour/redirect');
+         $model = Mage::getModel('fourzerofour/regexp');
 
          if ($id) {
              $model->load((int)$id);
-             if ($model->getRedirectId()) {
+             if ($model->getRegexpId()) {
                  $data = Mage::getSingleton('adminhtml/session')->getFormData(true);
                  if ($data) {
-                     $model->setData($data)->setRedirectId($id);
+                     $model->setData($data)->getRegexpId($id);
                  }
              } else {
                  Mage::getSingleton('adminhtml/session')->addError(Mage::helper('fourzerofour')->__('Record does not exists'));
@@ -62,18 +63,18 @@
 
      public function massDeleteAction() {
 
-         $redirectIds = $this->getRequest()->getParam('redirects404');
-         if(!is_array($redirectIds)) {
+         $regExpIds = $this->getRequest()->getParam('regexpsIds');
+         if(!is_array($regExpIds)) {
              Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
          } else {
              try {
-                 foreach ($redirectIds as $redirectId) {
-                     $redirect = Mage::getModel('fourzerofour/redirect')->load($redirectId);
-                     $redirect->delete();
+                 foreach ($regExpIds as $regExp) {
+                     $regExp = Mage::getModel('fourzerofour/regexp')->load($regExp);
+                     $regExp->delete();
                  }
                  Mage::getSingleton('adminhtml/session')->addSuccess(
                      Mage::helper('adminhtml')->__(
-                         'Total of %d record(s) were successfully deleted', count($redirectIds)
+                         'Total of %d record(s) were successfully deleted', count($regExpIds)
                      )
                  );
              } catch (Exception $e) {
@@ -82,7 +83,7 @@
          }
          $this->_redirect('*/*/index');
 
-     } //public function massDeleteAction() {
+     } // public function massDeleteAction() {
 
 
 
@@ -90,8 +91,9 @@
 
          if ($data = $this->getRequest()->getPost())
          {
-             $model = Mage::getModel('fourzerofour/redirect');
+             $model = Mage::getModel('fourzerofour/regexp');
              $id = $this->getRequest()->getParam('id');
+
              if ($id) {
                  $model->load($id);
              }
@@ -100,7 +102,7 @@
              Mage::getSingleton('adminhtml/session')->setFormData($data);
              try {
                  if ($id) {
-                     $model->setRedirectId($id);
+                     $model->setRegexpId($id);
                  }
                  $model->save();
 
@@ -108,12 +110,12 @@
                      Mage::throwException(Mage::helper('fourzerofour')->__('Error while saving data...'));
                  }
 
-                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('fourzerofour')->__('404 Redirect Saved.'));
+                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('fourzerofour')->__('Regular Expression saved.'));
                  Mage::getSingleton('adminhtml/session')->setFormData(false);
 
                  // The following line decides if it is a "save" or "save and continue"
                  if ($this->getRequest()->getParam('back')) {
-                     $this->_redirect('*/*/edit', array('id' => $model->getRedirectId()));
+                     $this->_redirect('*/*/edit', array('id' => $model->getRegexpId()));
                  } else {
                      $this->_redirect('*/*/');
                  }
@@ -121,7 +123,7 @@
              } catch (Exception $e) {
                  Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                  if ($model && $model->getId()) {
-                     $this->_redirect('*/*/edit', array('id' => $model->getRedirectId()));
+                     $this->_redirect('*/*/edit', array('id' => $model->getRegexpId()));
                  } else {
                      $this->_redirect('*/*/');
                  }
@@ -135,11 +137,10 @@
      } // public function saveAction() {
 
 
-
      public function exportCsvAction () {
 
-         $fileName   = 'logs404.csv';
-         $grid       = $this->getLayout()->createBlock('fourzerofour/adminhtml_logs_grid');
+         $fileName   = 'regexp.csv';
+         $grid       = $this->getLayout()->createBlock('fourzerofour/adminhtml_regexp_grid');
          $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
 
      } // public function exportCsvAction () {
@@ -150,7 +151,7 @@
          $id = $this->getRequest()->getParam('id', null);
          if ($id) {
 
-             $model = Mage::getModel('fourzerofour/redirect');
+             $model = Mage::getModel('fourzerofour/regexp');
              $id = $this->getRequest()->getParam('id');
              if ($id) {
                  $model->load($id);
@@ -168,7 +169,7 @@
              } catch (Exception $e) {
                  Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                  if ($model && $model->getId()) {
-                     $this->_redirect('*/*/edit', array('id' => $model->getRedirectId()));
+                     $this->_redirect('*/*/edit', array('id' => $model->getRegexpId()));
                  } else {
                      $this->_redirect('*/*/');
                  }
@@ -176,31 +177,6 @@
              return;
          }
 
-     } // public function deleteAction() {
-
-
-     public function addfrom404Action () {
-
-         $data = Mage::app()->getRequest()->getPost();
-         if ($data) {
-             try {
-                 $redirect = Mage::getModel('fourzerofour/redirect');
-                 $redirect->setRedirectType($data['redirectType'])
-                          ->setProductId ($data['productId'])
-                          ->setCategoryId ($data['categoryId'])
-                          ->setRequestPath ($data['requestPath'])
-                          ->setTargetPath ($data['targetPath'])
-                          ->save();
-                 Mage::getSingleton('adminhtml/session')->addSuccess(
-                     Mage::helper('adminhtml')->__(
-                         'Redirect for <u> %s </u> created successfully' , $data['requestPath']
-                     ));
-                 echo 'done';
-             } catch (Exception $e){
-                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                 $this->_redirect('*/*/');
-             }
-         }
-     } //public function addfrom404Action () {
+     } //public function deleteAction() {
 
  }

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Snowdog_Fourzerofour>
-            <version>0.1.2</version>
+            <version>0.1.4</version>
         </Snowdog_Fourzerofour>
     </modules>
     <global>
@@ -45,6 +45,7 @@
                 <entities>
                     <log><table>snowdog_404_log</table></log>
                     <redirect><table>snowdog_404_redirect</table></redirect>
+                    <regexp><table>snowdog_404_regexp</table></regexp>
                 </entities>
             </snowdog_fourzerofour_resource>
         </models>

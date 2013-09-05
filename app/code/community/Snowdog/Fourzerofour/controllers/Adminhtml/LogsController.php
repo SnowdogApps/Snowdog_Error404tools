@@ -1,22 +1,28 @@
 <?php
 
-class Snowdog_Fourzerofour_Adminhtml_LogsController extends Mage_Adminhtml_Controller_Action {
+class Snowdog_Fourzerofour_Adminhtml_LogsController
+    extends Mage_Adminhtml_Controller_Action {
 
     protected function _initAction() {
+
         $this->loadLayout()
             ->_setActiveMenu('report');
 
         return $this;
-    }
 
-    public function indexAction()
-    {
+    } // protected function _initAction() {
+
+
+    public function indexAction() {
+
         $this->loadLayout();
         $this->renderLayout();
-    }
+
+    } // public function indexAction()
 
 
     public function massDeleteAction() {
+
         $redirectIds = $this->getRequest()->getParam('logs404');
         if(!is_array($redirectIds)) {
             Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
@@ -36,12 +42,15 @@ class Snowdog_Fourzerofour_Adminhtml_LogsController extends Mage_Adminhtml_Contr
             }
         }
         $this->_redirect('*/*/index');
-    }
+
+    } // public function massDeleteAction() {
 
 
     public function exportCsvAction () {
+
         $fileName   = 'logs404.csv';
         $grid       = $this->getLayout()->createBlock('fourzerofour/adminhtml_logs_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
-    }
+
+    } // public function exportCsvAction () {
 }

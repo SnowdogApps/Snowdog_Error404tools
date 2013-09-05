@@ -11,7 +11,19 @@
                 <fourzerofourredirect translate="title" module="fourzerofour">
                     <title>404 redirects</title>
                     <sort_order>1999999</sort_order>
-                    <action>adminlog/adminhtml_redirects</action>
+                    <children>
+                        <redirects translate="title" module="fourzerofour">
+                            <title>404 redirects</title>
+                            <sort_order>1999999</sort_order>
+                            <action>adminlog/adminhtml_redirects</action>
+                        </redirects>
+                        <regexp translate="title" module="fourzerofour">
+                            <title>Regular expressions</title>
+                            <sort_order>2000000</sort_order>
+                            <action>adminlog/adminhtml_regexp</action>
+                        </regexp>
+                    </children>
+
                 </fourzerofourredirect>
             </children>
         </report>

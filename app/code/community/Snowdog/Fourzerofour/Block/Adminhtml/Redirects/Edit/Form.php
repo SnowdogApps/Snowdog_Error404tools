@@ -1,10 +1,10 @@
 <?php
 
 
-class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
-{
-    protected function _prepareForm()
-    {
+class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit_Form
+    extends Mage_Adminhtml_Block_Widget_Form {
+
+    protected function _prepareForm() {
         if (Mage::getSingleton('adminhtml/session')->getFourzerofour())
         {
             $data = Mage::getSingleton('adminhtml/session')->getFourzerofour();
@@ -74,4 +74,5 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit_Form extends Mage_Admi
 
         return parent::_prepareForm();
     }
-}
+
+} // class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit_Form

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+redirects<?xml version="1.0"?>
 <config>
     <sections>
         <log404_options translate="label" module="fourzerofour">
@@ -47,6 +47,15 @@
                             <show_in_store>1</show_in_store>
                             <comment>Path used if a product / category were deleted</comment>
                         </log404defaulturl>
+                        <log404regexp translate="label comment">
+                            <label>Use regurlar expressions when redirect is not found</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>52</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </log404regexp>
                         <dbjoin translate="label comment">
                             <label>Group database records</label>
                             <frontend_type>select</frontend_type>

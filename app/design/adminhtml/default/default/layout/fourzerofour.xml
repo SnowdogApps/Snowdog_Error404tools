@@ -29,4 +29,22 @@
             <block type="fourzerofour/adminhtml_redirects_edit" name="redirects404_edit" />
         </reference>
     </fourzerofour_adminhtml_redirects_edit>
+
+
+    <!-- regular expressions -->
+    <fourzerofour_adminhtml_regexp_index>
+        <reference name="menu">
+            <action method="setActive"><menupath>report</menupath></action>
+        </reference>
+        <reference name="content">
+            <block type="fourzerofour/adminhtml_regexp" name="regexp" />
+        </reference>
+    </fourzerofour_adminhtml_regexp_index>
+
+    <!-- regexp edit -->
+    <fourzerofour_adminhtml_regexp_edit>
+        <reference name="content">
+            <block type="fourzerofour/adminhtml_regexp_edit" name="regexp_edit" />
+        </reference>
+    </fourzerofour_adminhtml_regexp_edit>
 </layout>

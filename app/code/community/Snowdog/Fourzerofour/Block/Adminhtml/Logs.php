@@ -11,7 +11,8 @@
  * @author Jakub Winkler
  * @company Snowdog
  */
-class Snowdog_Fourzerofour_Block_Adminhtml_Logs extends Mage_Adminhtml_Block_Widget_Grid_Container {
+class Snowdog_Fourzerofour_Block_Adminhtml_Logs
+    extends Mage_Adminhtml_Block_Widget_Grid_Container {
 
     public function __construct() {
         $this->_controller = 'adminhtml_logs';
@@ -20,7 +21,7 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Logs extends Mage_Adminhtml_Block_Wid
 
         parent::__construct();
         $this->_removeButton('add');
-    }
+    } // public function __construct() {
 
 }
 

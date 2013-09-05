@@ -44,7 +44,8 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                             $url = $defaultUrl;
                         }
                         break ;
-                    }
+                    } // case 1 : {
+
                     case 2 : {
                         $categoryId = (int)$redirect404->getCategoryId();
                         $category   = Mage::getModel('catalog/category')->load($categoryId);
@@ -57,18 +58,37 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                             $url = $defaultUrl;
                         }
                         break ;
-                    }
+                    } //
+
                     case 3 : {
                         $url        = Mage::getBaseUrl() . $redirect404->getTargetPath();
-                        break;  }
-                }
+                        break;
+                    } // case 3 : {
+
+                } // switch ($redirect404->getRedirectType()) {
 
                 // redirect to specified page
                 header('HTTP/1.1 301 Moved Permanently');
                 header('Location: ' . $url);
                 die();
 
-            } else {
+            } // if ($redirect404->getId()) {
+                else {
+
+                // check for regexp check //
+                $useRegExp      = (int)Mage::getStoreConfig('log404_options/log404_group/log404regexp');
+                if ($useRegExp) {
+                    $regExpCollection = Mage::getModel('fourzerofour/regexp')->getCollection();
+                    foreach ($regExpCollection as $regExp) {
+                        $exp = $regExp->getRegExpression();
+                        if (preg_match($exp , $requestUrl)) {
+                            $url = $regExp->getTargetPath();
+                            header('HTTP/1.1 301 Moved Permanently');
+                            header('Location: ' . $url);
+                            die();
+                        } // if (preg_match($exp , $requestUrl)) {
+                    } // foreach ($regExpCollection as $regExp) {
+                } // if ($useRegExp) {
 
                 if (($logReferrer != '') || ($logReferrer == '' && $saveEmptyReferrer) ) {
                     $logTime       = date('Y-m-d H:i:s');
@@ -96,8 +116,9 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                                      $log->saveLogCsv($logTime, $logStoreId, $logUrlAddress, $logReferrer, $logIp, $logUserAgent); break ;}
                         case '3' : { $log->saveLogCsv($logTime, $logStoreId, $logUrlAddress, $logReferrer, $logIp, $logUserAgent); break ;}
                     }
-                }
-            }
-        }
-    }
-}
+                } // if (($logReferrer != '') || ($logReferrer == '' && $saveEmptyReferrer) ) {
+            } // else
+        } //if ($path == 'indexcmsnoroute') {
+    } //public function log404(Varien_Event_Observer $observer) {
+
+} // class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {

@@ -3,22 +3,22 @@
  * @author Jakub Winkler
  * @company Snowdog
  */
-class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Grid
+
+class Snowdog_Fourzerofour_Block_Adminhtml_Regexp_Grid
     extends Mage_Adminhtml_Block_Widget_Grid {
 
 
     public function __construct() {
 
         parent::__construct();
-        $this->setId('redirectsGrid');
-        $this->setDefaultSort('redirect_id');
+        $this->setId('regexpGrid');
+        $this->setDefaultSort('regexp_id');
         $this->setDefaultDir('DESC');
 
-    } // public function __construct() {
+    } //public function __construct() {
 
 
     protected function _addColumnFilterToCollection($column) {
-
         $filterArr = Mage::registry('preparedFilter');
 
         if ($column->getId() === 'store_id') {
@@ -28,13 +28,12 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Grid
             parent::_addColumnFilterToCollection($column);
         }
         return $this;
-
     } // protected function _addColumnFilterToCollection($column) {
 
 
     protected function _prepareCollection() {
 
-        $model = Mage::getModel('fourzerofour/redirect');
+        $model = Mage::getModel('fourzerofour/regexp');
         $collection = $model->getCollection();
         $collection->getSelect()
             ->join('core_store', 'main_table.store_id = core_store.store_id', array('name'));
@@ -46,45 +45,22 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Grid
 
     protected function _prepareColumns() {
 
-        $this->addColumn('redirect_id', array(
+        $this->addColumn('regexp_id', array(
             'header' => Mage::helper('fourzerofour')->__('ID'),
             'align' => 'left',
-            'width' => '1px',
-            'index' => 'redirect_id',
+            'index' => 'regexp_id',
         ));
 
-        $this->addColumn('redirect_type', array(
-            'header' => Mage::helper('fourzerofour')->__('Redirect Type:'),
+        $this->addColumn('reg_expression', array(
+            'header' => Mage::helper('fourzerofour')->__('Regular expression'),
             'align' => 'left',
-            'index' => 'redirect_type',
-            'type' => 'options',
-            'renderer' => 'Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Renderer_Type',
-            'options'    => Mage::getModel('fourzerofour/redirect_type')->toOptionHash(),
-        ));
-
-        $this->addColumn('request_path', array(
-            'header' => Mage::helper('fourzerofour')->__('Request Path'),
-            'align' => 'left',
-            'index' => 'request_path',
+            'index' => 'reg_expression',
         ));
 
         $this->addColumn('target_path', array(
-            'header' => Mage::helper('fourzerofour')->__('Target Path'),
+            'header' => Mage::helper('fourzerofour')->__('Target Path:'),
             'align' => 'left',
             'index' => 'target_path',
-        ));
-
-
-        $this->addColumn('product_id', array(
-            'header' => Mage::helper('fourzerofour')->__('Product ID'),
-            'align' => 'left',
-            'index' => 'product_id',
-        ));
-
-        $this->addColumn('category_id', array(
-            'header' => Mage::helper('fourzerofour')->__('Category ID'),
-            'align' => 'left',
-            'index' => 'category_id',
         ));
 
         $this->addColumn('store_id', array(
@@ -105,8 +81,8 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Grid
 
     protected function _prepareMassaction() {
 
-        $this->setMassactionIdField('redirect_id');
-        $this->getMassactionBlock()->setFormFieldName('redirects404');
+        $this->setMassactionIdField('regexp_id');
+        $this->getMassactionBlock()->setFormFieldName('regexpsIds');
 
         $this->getMassactionBlock()->addItem('delete', array(
             'label' => Mage::helper('fourzerofour')->__('Delete'),
@@ -116,15 +92,14 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Grid
 
         return $this;
 
-    }// protected function _prepareMassaction() {s
+    } // protected function _prepareMassaction() {
 
 
     public function getRowUrl($row) {
 
         return $this->getUrl('*/*/edit', array('id' => $row->getId()));
 
-    } // public function getRowUrl($row) {
-
+    } // public function getRowUrl($row)
 
 
 }
