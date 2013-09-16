@@ -1,4 +1,4 @@
-redirects<?xml version="1.0"?>
+<?xml version="1.0"?>
 <config>
     <sections>
         <log404_options translate="label" module="fourzerofour">
