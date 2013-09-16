@@ -2,7 +2,7 @@
 
 
 class Snowdog_Fourzerofour_Block_Adminhtml_Regexp_Edit_Form
-    extends Mage_Adminhtml_Block_Widget_For {
+    extends Mage_Adminhtml_Block_Widget_Form {
 
     protected function _prepareForm() {
 
