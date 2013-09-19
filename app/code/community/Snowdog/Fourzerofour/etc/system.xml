@@ -39,13 +39,13 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </log404referer>
                         <log404defaulturl translate="label comment">
-                            <label>System redirect if product or a category is not found</label>
+                            <label>System redirect if product or a category is not found / is not active</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>51</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <comment>Path used if a product / category were deleted</comment>
+                            <comment>Path used if a product / category were deleted / disabled</comment>
                         </log404defaulturl>
                         <log404regexp translate="label comment">
                             <label>Use regurlar expressions when redirect is not found</label>

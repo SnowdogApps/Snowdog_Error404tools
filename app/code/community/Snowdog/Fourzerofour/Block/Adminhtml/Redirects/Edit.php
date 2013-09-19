@@ -18,12 +18,6 @@ class Snowdog_Fourzerofour_Block_Adminhtml_Redirects_Edit
         $this->_controller = 'adminhtml_redirects';
         $this->_mode = 'edit';
 
-        $this->_addButton('save_and_continue', array(
-            'label' => Mage::helper('fourzerofour')->__('Save And Continue Edit'),
-            'onclick' => 'saveAndContinueEdit()',
-            'class' => 'save',
-        ), -100);
-
         $this->_updateButton('save', 'label', Mage::helper('fourzerofour')->__('Save 404 redirect'));
 
     } // public function __construct() {

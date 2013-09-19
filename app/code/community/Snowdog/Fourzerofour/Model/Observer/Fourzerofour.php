@@ -37,7 +37,7 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                         $product    = Mage::getModel('catalog/product')->load($productId);
 
                         // check if product model was loaded - if product entity exists
-                        if ($product->getId()) {
+                        if ($product->getId() && $product->getStatus()) {
                             $url = $product->getProductUrl() ;
                         } else {
                             // redirect to page defined in system configuration
@@ -51,7 +51,7 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                         $category   = Mage::getModel('catalog/category')->load($categoryId);
 
                         // check if category model was loaded - if category entity exists
-                        if ($category->getId()) {
+                        if ($category->getId() && $category->getIsActive()) {
                             $url = $category->getUrl();
                         } else {
                             // redirect to page defined in system configuration
