@@ -40,21 +40,23 @@ $j = 0;
 for ($i = 0; $i < $counter; $i++) {
 // var_dump($result);
     echo "going " . ($i+1) . ": rows : " . $recordProcess . "\n" ;
+
     // select all core_url_rewrite records
-    $query           = 'SELECT type_id, catalog_product_entity.entity_id FROM catalog_product_entity
+	$visibilityAttributeId = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('catalog_product', 'visibility');
+	$query           = 'SELECT type_id, catalog_product_entity.entity_id FROM catalog_product_entity
                 join catalog_product_entity_int
-                    on (catalog_product_entity.entity_id = catalog_product_entity_int.entity_id and value=1 and attribute_id = 85)
+                    on (catalog_product_entity.entity_id = catalog_product_entity_int.entity_id and value=1 and attribute_id = '.$visibilityAttributeId.')
                         where `type_id` = "simple"
                         order by catalog_product_entity.entity_id
                           limit ' . $recordProcess . ' offset ' . $i * $recordProcess;
 
     $results         = $readConnection->fetchAll($query);
+	$urlKeyAttributeId = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('catalog_product', 'url_key');
     foreach ($results as $result) {
 
-        $urlQuery = 'select value_id, store_id, entity_id, attribute_id, value from catalog_product_entity_varchar where
-                        `entity_id` = "'. $result['entity_id'].'"
-                            and
-                                `attribute_id` = "82"';
+        $urlQuery = 'SELECT value_id, store_id, entity_id, attribute_id, value FROM catalog_product_entity_varchar WHERE
+                        `entity_id` = "'. $result['entity_id'].'" AND
+                        `attribute_id` = "'.$urlKeyAttributeId.'"';
         $urlResult = $readConnection->fetchAll($urlQuery);
 
         foreach ($urlResult as $res) {
