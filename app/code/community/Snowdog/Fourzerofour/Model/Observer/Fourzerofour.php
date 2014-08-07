@@ -4,18 +4,17 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
 
     public function log404(Varien_Event_Observer $observer) {
 
-        $logReferrer = Mage::app()->getRequest()->getServer('HTTP_REFERER');
         $controller = Mage::app()->getRequest()->getControllerName();
-        $route      = Mage::app()->getRequest()->getRouteName();;
-        $action     = Mage::app()->getRequest()->getActionName();;
+        $route      = Mage::app()->getRequest()->getRouteName();
+        $action     = Mage::app()->getRequest()->getActionName();
         $path       = strtolower($controller . $route . $action);
-
-        $logSaveType      = Mage::getStoreConfig('log404_options/log404_group/log404type');
-        $saveEmptyReferrer = (int)Mage::getStoreConfig('log404_options/log404_group/log404referer');
-        $defaultUrl        = Mage::getBaseUrl() . Mage::getStoreConfig('log404_options/log404_group/log404default');
 
         if ($path == 'indexcmsnoroute') {
 
+            $logReferrer = Mage::app()->getRequest()->getServer('HTTP_REFERER');
+            $logSaveType      = Mage::getStoreConfig('log404_options/log404_group/log404type');
+            $saveEmptyReferrer = (int)Mage::getStoreConfig('log404_options/log404_group/log404referer');
+            $defaultUrl        = Mage::getBaseUrl() . Mage::getStoreConfig('log404_options/log404_group/log404default');
             // check for 404 redirect in the database
             // remove slash from REQUEST_URI
             $requestUrl = substr($_SERVER['REQUEST_URI'] ,1);
@@ -37,7 +36,7 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                         $product    = Mage::getModel('catalog/product')->load($productId);
 
                         // check if product model was loaded - if product entity exists
-                        if ($product->getId() && $product->getStatus()) {
+                        if ($product->getId() && $product->getStatus() == Mage_Catalog_Model_Product_Status::STATUS_ENABLED) {
                             $url = $product->getProductUrl() ;
                         } else {
                             // redirect to page defined in system configuration
@@ -68,6 +67,7 @@ class Snowdog_Fourzerofour_Model_Observer_Fourzerofour {
                 } // switch ($redirect404->getRedirectType()) {
 
                 // redirect to specified page
+                $url = ($url) ? $url:$defaultUrl;
                 header('HTTP/1.1 301 Moved Permanently');
                 header('Location: ' . $url);
                 die();
