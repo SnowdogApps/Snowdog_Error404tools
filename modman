@@ -1,0 +1,8 @@
+app/code/community/Snowdog/Fourzerofour							app/code/community/Snowdog/Fourzerofour
+app/etc/modules/Snowdog_Fourzerofouf.xml						app/etc/modules/Snowdog_Fourzerofouf.xml
+app/design/adminhtml/default/default/layout/fourzerofour.xml	app/design/adminhtml/default/default/layout/fourzerofour.xml
+app/design/adminhtml/default/default/template/404tools			app/design/adminhtml/default/default/template/404tools
+app/etc/modules/Snowdog_Fourzerofouf.xml						app/etc/modules/Snowdog_Fourzerofouf.xml
+app/locale/pl_PL/Snowdog_Fourzerofour.csv						app/locale/pl_PL/Snowdog_Fourzerofour.csv
+shell/step1_urlCopy.php											shell/step1_urlCopy.php
+shell/step2_urlKeyUpdate.php									shell/step2_urlKeyUpdate.php
